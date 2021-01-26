@@ -118,16 +118,23 @@ map <Leader>N :NERDTreeToggleVCS<Enter>
 " sync open file with NERDTree
 " " Check if NERDTree is open or active
 function! IsNERDTreeOpen()        
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+	return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+function! IsNERDTreeFocussed()        
+	return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) == winnr())
 endfunction
 
 " Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
 " file, and we're not in vimdiff
 function! SyncTree()
-  if g:will_open_nerdtree != 1 && &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-	NERDTreeFind
-    wincmd p
-  endif
+	" echo "Modifiable: " . &modifiable . " open: " . IsNERDTreeOpen() . " name: " . expand('%') . " diff: " . &diff
+	if g:will_open_nerdtree != 1 && &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+		NERDTreeFind
+		if IsNERDTreeFocussed() 
+			wincmd p
+		endif
+	endif
 endfunction
 
 " Highlight currently open buffer in NERDTree
