@@ -25,6 +25,8 @@ Plug 'vim-scripts/argtextobj.vim' "function arguments
 Plug 'bkad/CamelCaseMotion'
 Plug 'jremmen/vim-ripgrep'
 
+Plug 'jonsmithers/vim-html-template-literals'
+
 Plug 'rluba/jai.vim'
 
 call plug#end()
