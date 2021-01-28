@@ -41,6 +41,7 @@ set hlsearch
 set number relativenumber
 set splitbelow
 set splitright
+set scrolloff=5 " Scroll before hitting the edges of the window
 
 " Auto-reload changed files
 autocmd FocusGained,BufEnter * if mode() != 'c' | checktime | endif
