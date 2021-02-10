@@ -27,6 +27,8 @@ Plug 'jremmen/vim-ripgrep'
 
 Plug 'jonsmithers/vim-html-template-literals'
 
+Plug 'chr4/nginx.vim'
+
 Plug 'rluba/jai.vim'
 
 call plug#end()
