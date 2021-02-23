@@ -16,6 +16,7 @@ Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'vim-airline/vim-airline'
 Plug 'https://tpope.io/vim/commentary.git'
 Plug 'https://tpope.io/vim/surround.git'
+Plug 'https://tpope.io/vim/repeat.git' " To make surround repeatable
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
@@ -24,6 +25,9 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/argtextobj.vim' "function arguments
 Plug 'bkad/CamelCaseMotion'
 Plug 'jremmen/vim-ripgrep'
+
+Plug 'glts/vim-magnum'	" For radical
+Plug 'glts/vim-radical' " View numbers in different representations (gA) and convert them (crd, crx, crb)
 
 Plug 'jonsmithers/vim-html-template-literals'
 
@@ -36,6 +40,9 @@ call plug#end()
 set nobackup		" do not keep a backup file
 set nowritebackup
 set autoindent		" always set autoindenting on
+autocmd FileType html setlocal autoindent smartindent nocindent indentexpr=
+" Auto-close tags on "</"
+autocmd FileType html inoremap </ </<C-X><C-O>
 set tabstop=4
 set shiftwidth=4
 set nowrap
@@ -44,6 +51,11 @@ set number relativenumber
 set splitbelow
 set splitright
 set scrolloff=5 " Scroll before hitting the edges of the window
+
+" HTML indentation
+
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
 
 " Auto-reload changed files
 autocmd FocusGained,BufEnter * if mode() != 'c' | checktime | endif
@@ -61,6 +73,7 @@ let mapleader = " "
 " Disable leader timeout
 set notimeout
 set ttimeout
+
 
 if has("gui_vimr")
 	let g:ctrlp_map = '<D-p>'
@@ -119,6 +132,8 @@ endfunction
 
 map <Leader>n :call NERDTreeOpenSafely()<Enter>
 map <Leader>N :NERDTreeToggleVCS<Enter>
+map <Leader>f :NERDTreeFind<Enter>
+map <Leader>s :call SyncTree()<Enter>
 
 " sync open file with NERDTree
 " " Check if NERDTree is open or active
@@ -143,7 +158,8 @@ function! SyncTree()
 endfunction
 
 " Highlight currently open buffer in NERDTree
-autocmd BufEnter * call SyncTree()
+" Disabled because it’s terribly slow for non-trivial projects
+" autocmd BufEnter * call SyncTree()
 
 " Shortcuts for copy/paste clipboard
 map <Leader>y "+y
@@ -196,7 +212,7 @@ let g:coc_global_extensions = [
 " \ 'coc-pairs',
 
 " Give more space for displaying messages.
-set cmdheight=2
+set cmdheight=1
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
