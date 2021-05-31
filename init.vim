@@ -12,6 +12,7 @@ Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'morhetz/gruvbox' " Theme
 
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+Plug 'bfrg/vim-cpp-modern' " C++ syntax
 
 Plug 'vim-airline/vim-airline'
 Plug 'https://tpope.io/vim/commentary.git'
@@ -32,8 +33,12 @@ Plug 'glts/vim-radical' " View numbers in different representations (gA) and con
 Plug 'jonsmithers/vim-html-template-literals'
 
 Plug 'chr4/nginx.vim'
+Plug 'ludovicchabant/vim-gutentags' " Update ctags files as you edit
+
+Plug 'ConradIrwin/vim-bracketed-paste' " Supposed to fix double-indentation when pasting indented code into vim
 
 Plug 'rluba/jai.vim'
+
 
 call plug#end()
 
@@ -41,8 +46,7 @@ set nobackup		" do not keep a backup file
 set nowritebackup
 set autoindent		" always set autoindenting on
 autocmd FileType html setlocal autoindent smartindent nocindent indentexpr=
-" Auto-close tags on "</"
-autocmd FileType html inoremap </ </<C-X><C-O>
+
 set tabstop=4
 set shiftwidth=4
 set nowrap
@@ -74,6 +78,11 @@ let mapleader = " "
 set notimeout
 set ttimeout
 
+" Auto-close tags on "</"
+autocmd FileType html inoremap </ </<C-X><C-O>
+
+autocmd FileType javascript syntax keyword jsAsync async await
+autocmd FileType javascript highlight link jsAsync Keyword
 
 if has("gui_vimr")
 	let g:ctrlp_map = '<D-p>'
@@ -83,7 +92,7 @@ endif
 
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = '\v[\/]((\.(git|hg|svn))|(node_modules|build|dist))$'
+" let g:ctrlp_custom_ignore = '\v[\/]((\.(git|hg|svn))|(node_modules|build|dist)$'
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 
@@ -198,6 +207,7 @@ let g:rg_highlight = 1
 let g:rg_derive_root = 1
 
 autocmd FileType typescript setlocal commentstring=//\ %s
+autocmd FileType cpp setlocal commentstring=//\ %s
 """"""""""""""""
 " COC stuff
 """"""""""""""""
@@ -243,6 +253,10 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Jump to error/warning
+nmap <silent> <leader>gn :call CocAction('diagnosticNext')<CR>
+nmap <silent> <leader>gN :call CocAction('diagnosticPrevious')<CR>
+
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -271,3 +285,4 @@ map <Leader>c :make<Enter>
 map <Leader>v :w<Enter> :bot terminal ++rows=20 jaic %<Enter>
 map <Leader>r :execute '!jair ' . FindJaiExecutable(expand('%')) . ' ' . jair_args<Enter>
 autocmd FileType jai compiler jai
+map <Leader>l :Rg<Enter>
