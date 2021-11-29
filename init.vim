@@ -13,6 +13,7 @@ Plug 'morhetz/gruvbox' " Theme
 
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'bfrg/vim-cpp-modern' " C++ syntax
+Plug 'mustache/vim-mustache-handlebars' " Handlebars syntax
 
 Plug 'vim-airline/vim-airline'
 Plug 'https://tpope.io/vim/commentary.git'
@@ -25,9 +26,11 @@ Plug 'vim-scripts/regreplop.vim'  "Replace something with the clipboard (<C-K><m
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/argtextobj.vim' "function arguments
 Plug 'bkad/CamelCaseMotion'
-Plug 'jremmen/vim-ripgrep'
+" Unmaintained and has an error. Switching to a fork with a fix
+" Plug 'jremmen/vim-ripgrep' 
+Plug 'tacahiroy/vim-ripgrep', {'branch': 'fix-e1208'}
 
-Plug 'glts/vim-magnum'	" For radical
+Plug 'glts/vim-magnum'	" For vim-radical
 Plug 'glts/vim-radical' " View numbers in different representations (gA) and convert them (crd, crx, crb)
 
 Plug 'jonsmithers/vim-html-template-literals'
@@ -39,13 +42,14 @@ Plug 'ConradIrwin/vim-bracketed-paste' " Supposed to fix double-indentation when
 
 Plug 'rluba/jai.vim'
 
-
 call plug#end()
 
 set nobackup		" do not keep a backup file
 set nowritebackup
 set autoindent		" always set autoindenting on
+set autoread		" Load changed files without alerting us all the time
 autocmd FileType html setlocal autoindent smartindent nocindent indentexpr=
+autocmd FIleType changelog set tw=0	" Prevent VIM from hard-wrapping in changelog
 
 set tabstop=4
 set shiftwidth=4
@@ -84,7 +88,7 @@ autocmd FileType html inoremap </ </<C-X><C-O>
 autocmd FileType javascript syntax keyword jsAsync async await
 autocmd FileType javascript highlight link jsAsync Keyword
 
-if has("gui_vimr")
+if has("gui_vimr") || has("gui_macvim")
 	let g:ctrlp_map = '<D-p>'
 else 
 	let g:ctrlp_map = '<C-p>'
@@ -169,6 +173,24 @@ endfunction
 " Highlight currently open buffer in NERDTree
 " Disabled because it’s terribly slow for non-trivial projects
 " autocmd BufEnter * call SyncTree()
+"
+
+fun! NoExcitingBuffersLeft()
+    for w in range(1, winnr('$'))
+        if bufname(winbufnr(w)) !~# '__Tagbar\|NERD_tree_\|coc-explorer'
+                \ && getbufvar(winbufnr(w), "&buftype") !=? "quickfix"
+            return
+        endif
+    endfor
+
+    if tabpagenr('$') ==? 1
+        execute 'quitall'
+    else
+        execute 'tabclose'
+    endif
+endfun
+
+autocmd WinEnter * call NoExcitingBuffersLeft()
 
 " Shortcuts for copy/paste clipboard
 map <Leader>y "+y
@@ -198,16 +220,12 @@ inoremap ∆ <Esc>:m .-2<CR>==gi
 vnoremap º :m '>+1<CR>gv=gv
 vnoremap ∆ :m '<-2<CR>gv=gv
 
-let g:ale_linters = {'javascript': ['eslint']}
-let g:ale_javascript_eslint_executable = './node_modules/.bin/eslint'
-let g:ale_sign_column_always = 1
-let g:ale_completion_enabled = 1
-
 let g:rg_highlight = 1
 let g:rg_derive_root = 1
 
 autocmd FileType typescript setlocal commentstring=//\ %s
 autocmd FileType cpp setlocal commentstring=//\ %s
+autocmd FileType c setlocal commentstring=//\ %s
 """"""""""""""""
 " COC stuff
 """"""""""""""""
@@ -285,4 +303,13 @@ map <Leader>c :make<Enter>
 map <Leader>v :w<Enter> :bot terminal ++rows=20 jaic %<Enter>
 map <Leader>r :execute '!jair ' . FindJaiExecutable(expand('%')) . ' ' . jair_args<Enter>
 autocmd FileType jai compiler jai
+
+" Ripgrep
+let g:rg_highlight='true'
 map <Leader>l :Rg<Enter>
+"Move the quickfix window to the bottom.
+"Neovim automatically opens the quickfix window when grep is called, so
+"ripgrep’s g:rg_window_location has no effect because the window is already
+"open
+" autocmd FileType qf wincmd J
+
