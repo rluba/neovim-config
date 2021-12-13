@@ -26,9 +26,7 @@ Plug 'vim-scripts/regreplop.vim'  "Replace something with the clipboard (<C-K><m
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/argtextobj.vim' "function arguments
 Plug 'bkad/CamelCaseMotion'
-" Unmaintained and has an error. Switching to a fork with a fix
-" Plug 'jremmen/vim-ripgrep' 
-Plug 'tacahiroy/vim-ripgrep', {'branch': 'fix-e1208'}
+Plug 'jremmen/vim-ripgrep' 
 
 Plug 'glts/vim-magnum'	" For vim-radical
 Plug 'glts/vim-radical' " View numbers in different representations (gA) and convert them (crd, crx, crb)
@@ -43,7 +41,6 @@ Plug 'ConradIrwin/vim-bracketed-paste' " Supposed to fix double-indentation when
 Plug 'rluba/jai.vim'
 
 call plug#end()
-
 set nobackup		" do not keep a backup file
 set nowritebackup
 set autoindent		" always set autoindenting on
