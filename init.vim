@@ -310,3 +310,8 @@ map <Leader>l :Rg<Enter>
 "open
 " autocmd FileType qf wincmd J
 
+
+if has("win32")
+	source $VIMRUNTIME/mswin.vim
+	nunmap <C-a>
+endif
