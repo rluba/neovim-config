@@ -55,7 +55,8 @@ set hlsearch
 set number relativenumber
 set splitbelow
 set splitright
-set scrolloff=5 " Scroll before hitting the edges of the window
+set scrolloff=5 	 " Scroll vertially before hitting the edges of the window
+set sidescrolloff=10 " Scroll horizontally before hitting the edges of the window
 
 " HTML indentation
 
