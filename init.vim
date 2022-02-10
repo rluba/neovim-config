@@ -278,7 +278,7 @@ nmap <leader>rn <Plug>(coc-rename)
 
 " Jai stuff
 let g:jai_path='/Users/raphael/Projekte/jai/jai'
-let g:jai_compiler='jaic_vim'
+let g:jai_compiler='jai'
 let g:jai_modules=g:jai_path . '/modules/'
 
 function! FindJaiExecutable(filename)
