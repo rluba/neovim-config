@@ -14,6 +14,7 @@ Plug 'morhetz/gruvbox' " Theme
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'bfrg/vim-cpp-modern' " C++ syntax
 Plug 'mustache/vim-mustache-handlebars' " Handlebars syntax
+Plug 'tie/llvm.vim' " LLVM IR syntax
 
 Plug 'vim-airline/vim-airline'
 Plug 'https://tpope.io/vim/commentary.git'
@@ -47,6 +48,9 @@ set autoindent		" always set autoindenting on
 set autoread		" Load changed files without alerting us all the time
 autocmd FileType html setlocal autoindent smartindent nocindent indentexpr=
 autocmd FIleType changelog set tw=0	" Prevent VIM from hard-wrapping in changelog
+
+
+set guifont=Fira\ Mono:h11
 
 set tabstop=4
 set shiftwidth=4
