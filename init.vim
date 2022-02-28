@@ -44,6 +44,7 @@ Plug 'ConradIrwin/vim-bracketed-paste' " Supposed to fix double-indentation when
 Plug 'rluba/jai.vim'
 
 call plug#end()
+
 set nobackup		" do not keep a backup file
 set nowritebackup
 set autoindent		" always set autoindenting on
@@ -51,8 +52,12 @@ set autoread		" Load changed files without alerting us all the time
 autocmd FileType html setlocal autoindent smartindent nocindent indentexpr=
 autocmd FIleType changelog set tw=0	" Prevent VIM from hard-wrapping in changelog
 
+if has("win32") || has("win64")
+	set guifont=Fira\ Mono:h11
+else 
+	set guifont=Fira\ Mono:h16
+endif
 
-set guifont=Fira\ Mono:h11
 
 set tabstop=4
 set shiftwidth=4
