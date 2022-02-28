@@ -16,6 +16,8 @@ Plug 'bfrg/vim-cpp-modern' " C++ syntax
 Plug 'mustache/vim-mustache-handlebars' " Handlebars syntax
 Plug 'tie/llvm.vim' " LLVM IR syntax
 
+Plug 'junegunn/vim-easy-align' " Align code
+
 Plug 'vim-airline/vim-airline'
 Plug 'https://tpope.io/vim/commentary.git'
 Plug 'https://tpope.io/vim/surround.git'
@@ -112,6 +114,11 @@ nnoremap <C-w>ü <C-w>]
 
 map <Leader>= :%!jq --tab -S .<Enter>
 map <Leader>c :make<Enter>
+
+" Visual mode EasyAlign
+xmap <leader>a <Plug>(EasyAlign)
+" Normal mode EasyAlign
+nmap <leader>a <Plug>(EasyAlign)
 
 function! FindJaiExecutable(filename)
 	if exists("g:jair_path")
