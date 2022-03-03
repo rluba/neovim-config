@@ -55,7 +55,7 @@ autocmd FIleType changelog set tw=0	" Prevent VIM from hard-wrapping in changelo
 if has("win32") || has("win64")
 	set guifont=Fira\ Mono:h11
 else 
-	set guifont=Fira\ Mono:h16
+	set guifont=Fira\ Mono:h15
 endif
 
 
