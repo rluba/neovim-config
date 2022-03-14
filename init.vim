@@ -22,6 +22,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'https://tpope.io/vim/commentary.git'
 Plug 'https://tpope.io/vim/surround.git'
 Plug 'https://tpope.io/vim/repeat.git' " To make surround repeatable
+Plug 'tpope/vim-abolish'				   " To convert between camel case, snake case, etc. (crs, crc, crm)
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
