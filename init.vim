@@ -321,7 +321,12 @@ autocmd FileType jai compiler jai
 
 " Ripgrep
 let g:rg_highlight='true'
-map <Leader>l :Rg<Enter>
+if has("win32")
+	map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
+else
+	map <Leader>l "zyiw:exe "Rg '\\b".@z."\\b'"<Enter>
+endif
+
 "Move the quickfix window to the bottom.
 "Neovim automatically opens the quickfix window when grep is called, so
 "ripgrep’s g:rg_window_location has no effect because the window is already
