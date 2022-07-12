@@ -110,7 +110,7 @@ let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_custom_ignore = '\v[\/]((\.(git|hg|svn))|(node_modules|build|dist)$'
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard', 'rg %s --files --color=never --glob ""']
 
 
 " Remap jump to tag
@@ -302,7 +302,7 @@ nmap <M-Down> :resize +1<CR>
 nmap <M-Up> :resize -1<CR>
 
 " Jai stuff
-let g:jai_path='/Users/raphael/Projekte/jai/jai'
+let g:jai_path='C:/git/jai'
 let g:jai_compiler='jai'
 let g:jai_modules=g:jai_path . '/modules/'
 
