@@ -296,6 +296,11 @@ nmap <silent> <leader>gN :call CocAction('diagnosticPrevious')<CR>
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
+nmap <M-Right> :vertical resize +1<CR>
+nmap <M-Left> :vertical resize -1<CR>
+nmap <M-Down> :resize +1<CR>
+nmap <M-Up> :resize -1<CR>
+
 " Jai stuff
 let g:jai_path='/Users/raphael/Projekte/jai/jai'
 let g:jai_compiler='jai'
