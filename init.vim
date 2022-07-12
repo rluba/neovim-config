@@ -44,6 +44,8 @@ Plug 'ConradIrwin/vim-bracketed-paste' " Supposed to fix double-indentation when
 
 Plug 'rluba/jai.vim'
 
+Plug 'tpope/vim-fugitive'
+
 call plug#end()
 
 set nobackup		" do not keep a backup file
@@ -329,6 +331,9 @@ map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
 "open
 " autocmd FileType qf wincmd J
 
+
+
+let g:airline_section_b = '' " Get rid of 'current branch' indicator
 
 if has("win32")
 	source $VIMRUNTIME/mswin.vim
