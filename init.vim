@@ -71,6 +71,7 @@ set splitbelow
 set splitright
 set scrolloff=5 	 " Scroll vertially before hitting the edges of the window
 set sidescrolloff=10 " Scroll horizontally before hitting the edges of the window
+set ignorecase		 " Make search case-insensitive by default
 
 " HTML indentation
 
@@ -315,8 +316,6 @@ if !exists("jair_args")
   let jair_args = ''
 endif
 
-map <Leader>c :make<Enter>
-
 map <Leader>v :w<Enter> :bot terminal ++rows=20 jaic %<Enter>
 map <Leader>r :execute '!jair ' . FindJaiExecutable(expand('%')) . ' ' . jair_args<Enter>
 autocmd FileType jai compiler jai
@@ -332,8 +331,16 @@ map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
 " autocmd FileType qf wincmd J
 
 
+" gutentags / ctags
+let g:gutentags_ctags_executable='/opt/homebrew/bin/ctags'
+
+" Compile Jai project
+autocmd BufRead */jai/*.cpp,*/jai/*.h set makeprg=cmake\ --build\ build/macos/debug\ --parallel\ 8
+map <Leader>c :make<Enter>
 
 let g:airline_section_b = '' " Get rid of 'current branch' indicator
+
+set inccommand=split " Show multiple results when doing :%s replacements
 
 if has("win32")
 	source $VIMRUNTIME/mswin.vim
