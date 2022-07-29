@@ -129,6 +129,17 @@ xmap <leader>a <Plug>(EasyAlign)
 " Normal mode EasyAlign
 nmap <leader>a <Plug>(EasyAlign)
 
+" Next/previous search result
+map <C-n> :cn<Enter>
+map <C-h> :cN<Enter>
+
+" Navigate tabs
+map <C-h> gT
+map <C-l> gt
+
+" Exit terminal with Esc
+tnoremap <Esc> <C-\><C-n>
+
 function! FindJaiExecutable(filename)
 	if exists("g:jair_path")
 		return g:jair_path
