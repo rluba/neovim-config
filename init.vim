@@ -336,9 +336,6 @@ map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
 " autocmd FileType qf wincmd J
 
 
-" gutentags / ctags
-let g:gutentags_ctags_executable='/opt/homebrew/bin/ctags'
-
 " Compile Jai project
 autocmd BufRead */jai/*.cpp,*/jai/*.h set makeprg=cmake\ --build\ build/macos/debug\ --parallel\ 8
 map <Leader>c :make<Enter>
