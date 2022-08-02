@@ -131,7 +131,7 @@ nmap <leader>a <Plug>(EasyAlign)
 
 " Next/previous search result
 map <C-n> :cn<Enter>
-map <C-h> :cN<Enter>
+map <C-j> :cN<Enter>
 
 " Navigate tabs
 map <C-h> gT
