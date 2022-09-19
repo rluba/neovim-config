@@ -165,6 +165,7 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 " NERDTree
+let NERDTreeIgnore=['.dSYM$','\~$']
 let g:will_open_nerdtree = 0 "A 'mutex' to fix SyncTree opening another nerdtree when we use NERDTreeFocus for the first time
 function! NERDTreeOpenSafely()
 	let g:will_open_nerdtree = 1
