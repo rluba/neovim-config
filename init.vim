@@ -46,6 +46,9 @@ Plug 'rluba/jai.vim'
 
 Plug 'tpope/vim-fugitive'
 
+" This is super-broken in combination with ripgrep search
+" Plug 'wellle/context.vim' " Sticky context while scrolling
+
 call plug#end()
 
 set nobackup		" do not keep a backup file
@@ -58,12 +61,13 @@ autocmd FIleType changelog set tw=0	" Prevent VIM from hard-wrapping in changelo
 if has("win32") || has("win64")
 	set guifont=Fira\ Mono:h11
 else 
-	set guifont=Fira\ Mono:h15
+	set guifont=Fira\ Mono:h14
 endif
 
 
 set tabstop=4
 set shiftwidth=4
+set expandtab
 set nowrap
 set hlsearch
 set number relativenumber
@@ -111,7 +115,7 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_custom_ignore = '\v[\/]((\.(git|hg|svn))|(node_modules|build|dist)$'
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard', 'rg %s --files --color=never --glob ""']
-
+let g:ctrlp_switch_buffer = 'et' " If a file is already open, open it again in a new pane instead of switching to the existing pane
 
 " Remap jump to tag
 " nnoremap ü :tj<CR>
@@ -123,6 +127,7 @@ nnoremap <C-w>ü <C-w>]
 
 map <Leader>= :%!jq --tab -S .<Enter>
 map <Leader>c :make<Enter>
+
 
 " Visual mode EasyAlign
 xmap <leader>a <Plug>(EasyAlign)
@@ -140,31 +145,13 @@ map <C-l> gt
 " Exit terminal with Esc
 tnoremap <Esc> <C-\><C-n>
 
-function! FindJaiExecutable(filename)
-	if exists("g:jair_path")
-		return g:jair_path
-	else 
-		return fnamemodify(a:filename, ':r')
-	endif
-endfunction
-
-if !exists("jair_path")
-  let jair_path = ''
-endif
-if !exists("jair_args")
-  let jair_args = ''
-endif
-
-map <Leader>v :w<Enter> :bot terminal ++rows=20 jaic %<Enter>
-map <Leader>r :execute '!jair ' . FindJaiExecutable(expand('%')) . ' ' . jair_args<Enter>
-autocmd FileType jai compiler jai
-
 
 " Automatically open quickfix window when compiling
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 " NERDTree
+let NERDTreeIgnore=['.dSYM$','\~$']
 let g:will_open_nerdtree = 0 "A 'mutex' to fix SyncTree opening another nerdtree when we use NERDTreeFocus for the first time
 function! NERDTreeOpenSafely()
 	let g:will_open_nerdtree = 1
@@ -206,8 +193,12 @@ endfunction
 
 fun! NoExcitingBuffersLeft()
     for w in range(1, winnr('$'))
-        if bufname(winbufnr(w)) !~# '__Tagbar\|NERD_tree_\|coc-explorer'
-                \ && getbufvar(winbufnr(w), "&buftype") !=? "quickfix"
+        let l:name = bufname(winbufnr(w))
+        let l:type = getbufvar(winbufnr(w), "&buftype")
+        " echo "Name: " . l:name . ", Type: " . l:type
+        " @ToDo: Also ignore help window (But we don’t seem to find it with the
+        " range expression above
+        if l:name !~# '__Tagbar\|NERD_tree_\|coc-explorer' && type !=? "quickfix"
             return
         endif
     endfor
@@ -219,7 +210,7 @@ fun! NoExcitingBuffersLeft()
     endif
 endfun
 
-autocmd WinEnter * call NoExcitingBuffersLeft()
+autocmd WinClosed * call NoExcitingBuffersLeft()
 
 " Shortcuts for copy/paste clipboard
 map <Leader>y "+y
@@ -312,6 +303,7 @@ nmap <M-Left> :vertical resize -1<CR>
 nmap <M-Down> :resize +1<CR>
 nmap <M-Up> :resize -1<CR>
 
+
 " Jai stuff
 let g:jai_path='C:/git/jai'
 let g:jai_compiler='jai'
@@ -332,9 +324,11 @@ if !exists("jair_args")
   let jair_args = ''
 endif
 
-map <Leader>v :w<Enter> :bot terminal ++rows=20 jaic %<Enter>
-map <Leader>r :execute '!jair ' . FindJaiExecutable(expand('%')) . ' ' . jair_args<Enter>
 autocmd FileType jai compiler jai
+ "Set the current file as jai entry point
+map <Leader>e :let g:jai_entrypoint = expand('%')<Enter> :call UpdateJaiMakeprg()<Enter>
+map <Leader>u :call UpdateJaiMakeprg()<Enter>
+
 
 " Ripgrep
 let g:rg_highlight='true'
@@ -349,7 +343,6 @@ map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
 
 " Compile Jai project
 autocmd BufRead */jai/*.cpp,*/jai/*.h set makeprg=cmake\ --build\ build/macos/debug\ --parallel\ 8
-map <Leader>c :make<Enter>
 
 let g:airline_section_b = '' " Get rid of 'current branch' indicator
 
