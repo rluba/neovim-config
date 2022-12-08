@@ -114,7 +114,11 @@ let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_custom_ignore = '\v[\/]((\.(git|hg|svn))|(node_modules|build|dist)$'
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+if has("win32")
+    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard', 'rg %s --files --color=never --glob ""']
+else
+    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+endif
 let g:ctrlp_switch_buffer = 'et' " If a file is already open, open it again in a new pane instead of switching to the existing pane
 
 " Remap jump to tag
@@ -305,7 +309,11 @@ nmap <M-Up> :resize -1<CR>
 
 
 " Jai stuff
-let g:jai_path='/Users/raphael/Projekte/jai/jai'
+if has("win32")
+    let g:jai_path='C:/git/jai'
+else
+    let g:jai_path='/Users/raphael/Projekte/jai/jai'
+endif
 let g:jai_compiler='jai'
 let g:jai_modules=g:jai_path . '/modules/'
 
@@ -340,9 +348,10 @@ map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
 "open
 " autocmd FileType qf wincmd J
 
-
-" gutentags / ctags
-let g:gutentags_ctags_executable='/opt/homebrew/bin/ctags'
+if !has("win32")
+    " gutentags / ctags
+    let g:gutentags_ctags_executable='/opt/homebrew/bin/ctags'
+endif
 
 " Compile Jai project
 if has("win32")
