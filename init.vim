@@ -334,7 +334,7 @@ endif
 
 autocmd FileType jai compiler jai
  "Set the current file as jai entry point
-map <Leader>e :let g:jai_entrypoint = expand('%')<Enter> :call UpdateJaiMakeprg()<Enter>
+map <Leader>j :let g:jai_entrypoint = expand('%')<Enter> :call UpdateJaiMakeprg()<Enter>
 map <Leader>u :call UpdateJaiMakeprg()<Enter>
 
 
