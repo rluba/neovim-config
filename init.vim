@@ -370,3 +370,5 @@ if has("win32")
 	source $VIMRUNTIME/mswin.vim
 	nunmap <C-a>
 endif
+
+let g:neovide_cursor_animation_length=0
