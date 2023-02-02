@@ -30,7 +30,7 @@ Plug 'vim-scripts/regreplop.vim'  "Replace something with the clipboard (<C-K><m
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/argtextobj.vim' "function arguments
 Plug 'bkad/CamelCaseMotion'
-Plug 'jremmen/vim-ripgrep' 
+Plug 'rluba/vim-ripgrep' 
 
 Plug 'glts/vim-magnum'	" For vim-radical
 Plug 'glts/vim-radical' " View numbers in different representations (gA) and convert them (crd, crx, crb)
@@ -244,9 +244,6 @@ inoremap ∆ <Esc>:m .-2<CR>==gi
 vnoremap º :m '>+1<CR>gv=gv
 vnoremap ∆ :m '<-2<CR>gv=gv
 
-let g:rg_highlight = 1
-let g:rg_derive_root = 1
-
 autocmd FileType typescript setlocal commentstring=//\ %s
 autocmd FileType cpp setlocal commentstring=//\ %s
 autocmd FileType c setlocal commentstring=//\ %s
@@ -339,7 +336,8 @@ map <Leader>u :call UpdateJaiMakeprg()<Enter>
 
 
 " Ripgrep
-let g:rg_highlight='true'
+let g:rg_highlight = 1
+let g:rg_derive_root = 1
 map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
 
 "Move the quickfix window to the bottom.
