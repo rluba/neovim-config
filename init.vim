@@ -363,7 +363,7 @@ endif
 
 " Compile Jai project
 if has("win32")
-    autocmd BufRead */jai/*.cpp,*/jai/*.h setlocal errorformat=\ %f(%l\\\,%c):\ %m,\ %f(%l):\ %m
+    autocmd BufRead */jai/*.cpp,*/jai/*.h setlocal errorformat=%f(%l\\\,%c):\ fatal\ %t%*[^:]:\ %m,%f(%l\\\,%c):\ %t%*[^:]:\ %m,%f(%l):\ fatal\ %t%*[^:]:\ %m,%f(%l):\ %t%*[^:]:\ %m,%*[^.].lib%*[^:]:\ %t%*[^:]:\ %m,%*[^.].obj%*[^:]:\ %t%*[^:]:\ %m
     autocmd BufRead */jai/*.cpp,*/jai/*.h setlocal makeprg=MSBuild.exe\ /nologo\ /v:q\ /p:configuration=Debug\ /p:platform=x64\ /p:GenerateFullPaths=true\ jai.vcxproj
 else 
     autocmd BufRead */jai/*.cpp,*/jai/*.h setlocal makeprg=cmake\ --build\ build/macos/debug\ --parallel\ 8
