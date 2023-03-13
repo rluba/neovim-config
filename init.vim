@@ -70,7 +70,8 @@ set shiftwidth=4
 set expandtab
 set nowrap
 set hlsearch
-set number relativenumber
+set number
+" set number relativenumber
 set splitbelow
 set splitright
 set scrolloff=5 	 " Scroll vertially before hitting the edges of the window
