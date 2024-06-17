@@ -1,4 +1,11 @@
 {
 	"tsserver.enable": false,
 	"npm.binPath": "/Users/raphael/.nvm/versions/node/v18.20.2/bin/node",
+    "languageserver": {
+        "jai": {
+            "command": "/Users/raphael/Projekte/jai/jails/bin/jails",
+            "args": [],
+            "filetypes": ["jai"]
+        }
+    }
 }
