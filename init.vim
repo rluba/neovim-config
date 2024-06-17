@@ -108,11 +108,11 @@ autocmd FileType html inoremap </ </<C-X><C-O>
 autocmd FileType javascript syntax keyword jsAsync async await
 autocmd FileType javascript highlight link jsAsync Keyword
 
-" if has("gui_vimr") || has("gui_macvim")
-" 	let g:ctrlp_map = '<D-p>'
-" else 
-let g:ctrlp_map = '<C-p>'
-" endif
+if has("mac") && has("gui_running") 
+ 	let g:ctrlp_map = '<D-p>'
+else 
+    let g:ctrlp_map = '<C-p>'
+endif
 
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
