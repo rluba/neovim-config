@@ -253,6 +253,7 @@ autocmd FileType c setlocal commentstring=//\ %s
 """"""""""""""""
 
 " coc config
+let g:coc_node_path = '/Users/raphael/.nvm/versions/node/v18.20.2/bin/node'
 let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-tsserver',

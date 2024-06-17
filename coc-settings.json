@@ -1,4 +1,4 @@
 {
 	"tsserver.enable": false,
-	"npm.binPath": "~/.nvm/versions/node/v16.13.1/bin/yarn"
+	"npm.binPath": "/Users/raphael/.nvm/versions/node/v18.20.2/bin/node",
 }
