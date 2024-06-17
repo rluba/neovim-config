@@ -46,6 +46,8 @@ Plug 'rluba/jai.vim'
 
 Plug 'tpope/vim-fugitive'
 
+Plug 'posva/vim-vue'
+
 " This is super-broken in combination with ripgrep search
 " Plug 'wellle/context.vim' " Sticky context while scrolling
 
