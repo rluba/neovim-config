@@ -353,6 +353,7 @@ map <Leader>u :call UpdateJaiMakeprg()<Enter>
 let g:rg_highlight = 1
 let g:rg_derive_root = 1
 map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
+map <Leader>d "zyiw:exe 'Rg "\b'.@z.'\s*::"'<Enter>
 
 "Move the quickfix window to the bottom.
 "Neovim automatically opens the quickfix window when grep is called, so
@@ -379,8 +380,13 @@ let g:airline_section_b = '' " Get rid of 'current branch' indicator
 set inccommand=split " Show multiple results when doing :%s replacements
 
 if has("win32")
-	source $VIMRUNTIME/mswin.vim
+	source $VIMRUNTIME/scripts/mswin.vim
 	nunmap <C-a>
+
+    " if executable('rg')
+    "   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+    "   let g:ctrlp_use_caching = 0
+    " endif
 endif
 
 let g:neovide_cursor_animation_length=0
