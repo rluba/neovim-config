@@ -255,7 +255,11 @@ autocmd FileType c setlocal commentstring=//\ %s
 """"""""""""""""
 
 " coc config
+
+if has("win32")
+else
 let g:coc_node_path = '/Users/raphael/.nvm/versions/node/v22.18.0/bin/node'
+endif
 let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-tsserver',
@@ -398,10 +402,8 @@ lua << EOF
   vim.api.nvim_create_autocmd('PackChanged', {
     callback = function(ev)
       local name, kind = ev.data.spec.name, ev.data.kind
-      if name == 'fff.nvim' and (kind == 'install' or kind == 'update') then
-        if not ev.data.active then
-          vim.cmd.packadd('fff.nvim')
-        end
+      if name == 'fff' and (kind == 'install' or kind == 'update') then
+        if not ev.data.active then vim.cmd.packadd('fff') end
         require('fff.download').download_or_build_binary()
       end
     end,
