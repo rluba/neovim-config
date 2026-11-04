@@ -6,7 +6,7 @@ Plug 'scrooloose/nerdtree'
 "Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "Plug 'ryanoasis/vim-devicons'
 "Plug 'airblade/vim-gitgutter'
-Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
+" Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 "Plug 'scrooloose/nerdcommenter'
 
 Plug 'morhetz/gruvbox' " Theme
@@ -108,21 +108,21 @@ autocmd FileType html inoremap </ </<C-X><C-O>
 autocmd FileType javascript syntax keyword jsAsync async await
 autocmd FileType javascript highlight link jsAsync Keyword
 
-if has("mac") && has("gui_running") 
- 	let g:ctrlp_map = '<D-p>'
-else 
-    let g:ctrlp_map = '<C-p>'
-endif
+" if has("mac") && has("gui_running") 
+"  	let g:ctrlp_map = '<D-p>'
+" else 
+"     let g:ctrlp_map = '<C-p>'
+" endif
 
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-" let g:ctrlp_custom_ignore = '\v[\/]((\.(git|hg|svn))|(node_modules|build|dist)$'
-if has("win32")
-    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard', 'rg %s --files --color=never --glob ""']
-else
-    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-endif
-let g:ctrlp_switch_buffer = 'et' " If a file is already open, open it again in a new pane instead of switching to the existing pane
+" let g:ctrlp_cmd = 'CtrlP'
+" let g:ctrlp_working_path_mode = 'ra'
+" " let g:ctrlp_custom_ignore = '\v[\/]((\.(git|hg|svn))|(node_modules|build|dist)$'
+" if has("win32")
+"     let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard', 'rg %s --files --color=never --glob ""']
+" else
+"     let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+" endif
+" let g:ctrlp_switch_buffer = 'et' " If a file is already open, open it again in a new pane instead of switching to the existing pane
 
 " Remap jump to tag
 " nnoremap ü :tj<CR>
@@ -255,7 +255,7 @@ autocmd FileType c setlocal commentstring=//\ %s
 """"""""""""""""
 
 " coc config
-let g:coc_node_path = '/Users/raphael/.nvm/versions/node/v18.20.2/bin/node'
+let g:coc_node_path = '/Users/raphael/.nvm/versions/node/v22.18.0/bin/node'
 let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-tsserver',
@@ -352,7 +352,7 @@ map <Leader>u :call UpdateJaiMakeprg()<Enter>
 " Ripgrep
 let g:rg_highlight = 1
 let g:rg_derive_root = 1
-map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
+" map <Leader>l "zyiw:exe 'Rg "\b'.@z.'\b"'<Enter>
 map <Leader>d "zyiw:exe 'Rg "\b'.@z.'\s*::"'<Enter>
 
 "Move the quickfix window to the bottom.
@@ -390,3 +390,32 @@ if has("win32")
 endif
 
 let g:neovide_cursor_animation_length=0
+
+if has('nvim')
+lua << EOF
+  vim.pack.add({'https://github.com/dmtrKovalenko/fff'})
+
+  vim.api.nvim_create_autocmd('PackChanged', {
+    callback = function(ev)
+      local name, kind = ev.data.spec.name, ev.data.kind
+      if name == 'fff.nvim' and (kind == 'install' or kind == 'update') then
+        if not ev.data.active then
+          vim.cmd.packadd('fff.nvim')
+        end
+        require('fff.download').download_or_build_binary()
+      end
+    end,
+  })
+
+  vim.g.fff = {
+    lazy_sync = true,
+    debug = {enabled = true, show_scores = true,},
+  }
+
+  vim.keymap.set( 'n', 'ff', function() require('fff').find_files() end, { desc = 'FFFind files' })
+  vim.keymap.set( 'n', '<C-p>', function() require('fff').find_files() end, { desc = 'FFFind files' })
+  vim.keymap.set( 'n', 'fg', function() require('fff').live_grep() end, { desc = 'FFFind files grep' })
+  vim.keymap.set( 'n', '<leader>l', function() require('fff').live_grep_under_cursor() end, { desc = 'FFFind word' })
+  vim.keymap.set( 'n', '<leader>l', function() require('fff').live_grep_under_cursor() end, { desc = 'FFFind word' })
+EOF
+endif
