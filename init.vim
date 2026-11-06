@@ -418,6 +418,5 @@ lua << EOF
   vim.keymap.set( 'n', '<C-p>', function() require('fff').find_files() end, { desc = 'FFFind files' })
   vim.keymap.set( 'n', 'fg', function() require('fff').live_grep() end, { desc = 'FFFind files grep' })
   vim.keymap.set( 'n', '<leader>l', function() require('fff').live_grep_under_cursor() end, { desc = 'FFFind word' })
-  vim.keymap.set( 'n', '<leader>l', function() require('fff').live_grep_under_cursor() end, { desc = 'FFFind word' })
 EOF
 endif
